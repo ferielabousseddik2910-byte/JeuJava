@@ -57,46 +57,46 @@ public class Level {
         }
     }
 
-    // Niveau 1 - Le niveau original
+    // Niveau 1 - Introduction simple
     public static Level createLevel1() {
         String[][] layout = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "BABA", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "ROCK", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
             {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLAG", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
         return new Level("Niveau 1 - Les Bases", layout);
     }
 
-    // Niveau 2 - Avec des roches à pousser
+    // Niveau 2 - Puzzle de poussée
     public static Level createLevel2() {
         String[][] layout = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "ROCK", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "ROCK", "ROCK", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLAG", "WALL"},
+            {"WALL", "FLOOR", "WALL", "FLOOR", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "BABA", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
             {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
         return new Level("Niveau 2 - Pousser les Roches", layout);
     }
 
-    // Niveau 3 - Labyrinthe plus complexe
+    // Niveau 3 - Petit labyrinthe
     public static Level createLevel3() {
         String[][] layout = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "FLOOR", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "ROCK", "FLOOR", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
-            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "BABA", "FLOOR", "WALL", "FLOOR", "FLOOR", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "WALL", "FLOOR", "ROCK", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL"},
+            {"WALL", "FLOOR", "WALL", "FLOOR", "FLOOR", "FLOOR", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL"},
+            {"WALL", "FLOOR", "WALL", "FLOOR", "WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLAG", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
         return new Level("Niveau 3 - Le Labyrinthe", layout);
