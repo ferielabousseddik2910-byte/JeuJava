@@ -234,13 +234,13 @@ public class Game {
         if (hasProperty(target, Property.STOP)) {
             return false;
         }
+        if (hasProperty(target, Property.WIN)) {
+            return true; // WIN est toujours traversable (superposition), priorité sur PUSH
+        }
         if (hasProperty(target, Property.PUSH)) {
             int nextX = x + direction.dx;
             int nextY = y + direction.dy;
             return canPush(nextX, nextY, direction);
-        }
-        if (hasProperty(target, Property.WIN)) {
-            return true; // Permet la superposition sur les objets WIN comme le drapeau
         }
         return false; // Bloque le mouvement sur les autres objets sans propriétés spéciales
     }
@@ -251,7 +251,9 @@ public class Game {
         }
         Set<GameObjectType> pushable = new HashSet<>();
         for (GameObjectType type : grid[y][x]) {
-            if (properties.getOrDefault(type, Set.of()).contains(Property.PUSH)) {
+            Set<Property> props = properties.getOrDefault(type, Set.of());
+            // Un objet WIN ne doit pas être poussé : Baba doit pouvoir entrer dessus
+            if (props.contains(Property.PUSH) && !props.contains(Property.WIN)) {
                 pushable.add(type);
             }
         }
