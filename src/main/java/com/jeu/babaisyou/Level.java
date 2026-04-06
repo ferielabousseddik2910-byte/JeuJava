@@ -103,18 +103,17 @@ public class Level {
     }
     // Niveau 4 - Rock Is You
     public static Level createLevel4() {
-        // Règles actives au départ :
-        //   BABA IS YOU  : verticale colonne 7, lignes 1-2-3
+        // Seules règles actives au départ :
         //   ROCK IS YOU  : horizontale ligne 6, cols 1-2-3
         //   FLAG IS WIN  : horizontale ligne 6, cols 4-5-6
-        // Défi : baba et la roche se déplacent en même temps.
-        // Solution optimale : HAUT×2, DROITE×5 (la roche pousse TEXT_YOU,
-        // cassant BABA IS YOU), HAUT×2 → la roche atteint le drapeau.
+        // BABA IS YOU n'est PAS présente : baba est un objet neutre inerte.
+        // Le joueur contrôle uniquement la roche.
+        // Solution : naviguer la roche autour du mur central jusqu'au drapeau.
         String[][] layout = {
             {"WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"},
-            {"WALL","BABA","","","","","","TEXT_BABA","","WALL"},
-            {"WALL","WALL","WALL","WALL","","","","TEXT_IS","","WALL"},
-            {"WALL","","","","","","","TEXT_YOU","","WALL"},
+            {"WALL","BABA","","","","","","","","WALL"},
+            {"WALL","WALL","WALL","WALL","","","","","","WALL"},
+            {"WALL","","","","","","","","","WALL"},
             {"WALL","","","","WALL","","","","","WALL"},
             {"WALL","","ROCK","","WALL","","","FLAG","","WALL"},
             {"WALL","TEXT_ROCK","TEXT_IS","TEXT_YOU","TEXT_FLAG","TEXT_IS","TEXT_WIN","","","WALL"},
