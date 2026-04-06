@@ -5,10 +5,12 @@ public enum GameObjectType {
     WALL("wall.png", false, null, null),
     ROCK("rock.png", false, null, null),
     FLAG("flag.png", false, null, null),
+    FLOOR("floor.png", false, null, null), // Case de sol neutre
     TEXT_BABA("text_baba.png", true, GameObjectType.BABA, null),
     TEXT_WALL("text_wall.png", true, GameObjectType.WALL, null),
     TEXT_ROCK("text_rock.png", true, GameObjectType.ROCK, null),
     TEXT_FLAG("text_flag.png", true, GameObjectType.FLAG, null),
+    TEXT_FLOOR("text_floor.png", true, GameObjectType.FLOOR, null),
     TEXT_IS("text_is.png", true, null, null),
     TEXT_YOU("text_you.png", true, null, Property.YOU),
     TEXT_PUSH("text_push.png", true, null, Property.PUSH),

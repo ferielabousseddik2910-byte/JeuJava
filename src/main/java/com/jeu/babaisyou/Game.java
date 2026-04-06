@@ -28,6 +28,7 @@ public class Game {
         Rule.ofCode(GameObjectType.ROCK, Property.PUSH),
         Rule.ofCode(GameObjectType.WALL, Property.STOP),
         Rule.ofCode(GameObjectType.FLAG, Property.WIN)
+        // FLOOR n'a pas de propriétés spéciales - c'est juste un espace vide
     );
     private final List<Rule> dynamicRules = new ArrayList<>();
     private final Set<Rule> boardRules = new HashSet<>();

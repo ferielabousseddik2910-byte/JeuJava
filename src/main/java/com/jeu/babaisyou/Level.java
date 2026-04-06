@@ -61,12 +61,12 @@ public class Level {
     public static Level createLevel1() {
         String[][] layout = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
         return new Level("Niveau 1 - Les Bases", layout);
@@ -76,12 +76,12 @@ public class Level {
     public static Level createLevel2() {
         String[][] layout = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "ROCK", "WALL", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "ROCK", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
         return new Level("Niveau 2 - Pousser les Roches", layout);
@@ -91,12 +91,12 @@ public class Level {
     public static Level createLevel3() {
         String[][] layout = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "WALL", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "ROCK", "WALL", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "BABA", "FLOOR", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "FLOOR", "ROCK", "FLOOR", "WALL"},
+            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
+            {"WALL", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "FLOOR", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
         return new Level("Niveau 3 - Le Labyrinthe", layout);

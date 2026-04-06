@@ -102,6 +102,21 @@ Le jeu inclut maintenant **3 niveaux progressifs** :
 - **1/2/3** : Accès direct à n'importe quel niveau
 - **R** : Redémarre le niveau actuel
 
+## 🎲 Objets du Jeu
+
+Le jeu utilise différents types d'objets pour créer les niveaux :
+
+| Code | Description |
+|------|-------------|
+| `BABA` | Le personnage principal |
+| `ROCK` | Roche poussable |
+| `WALL` | Mur infranchissable |
+| `FLAG` | Objectif à atteindre |
+| `FLOOR` | **Case de sol neutre** (espace vide où on peut marcher) |
+| `TEXT_BABA`, `TEXT_IS`, `TEXT_YOU` | Règles de base |
+| `TEXT_ROCK`, `TEXT_PUSH` | Propriétés |
+| `TEXT_FLAG`, `TEXT_WIN` | Conditions de victoire |
+
 ## 🎲 Système de Règles
 
 Le jeu implémente deux types de règles :
