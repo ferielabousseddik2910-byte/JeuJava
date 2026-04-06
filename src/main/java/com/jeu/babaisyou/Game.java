@@ -1,0 +1,393 @@
+package com.jeu.babaisyou;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.imageio.ImageIO;
+
+public class Game {
+    private static final int WIDTH = 10;
+    private static final int HEIGHT = 8;
+    private final Set<GameObjectType>[][] grid;
+    private final Set<GameObjectType>[][] initialGrid;
+    private final Map<GameObjectType, BufferedImage> images;
+    private final BufferedImage tileImage;
+    private final Map<GameObjectType, Set<Property>> properties = new EnumMap<>(GameObjectType.class);
+    private final List<Rule> baseRules = List.of(
+        Rule.ofCode(GameObjectType.BABA, Property.YOU),
+        Rule.ofCode(GameObjectType.ROCK, Property.PUSH),
+        Rule.ofCode(GameObjectType.WALL, Property.STOP),
+        Rule.ofCode(GameObjectType.FLAG, Property.WIN)
+    );
+    private final List<Rule> dynamicRules = new ArrayList<>();
+    private final Set<Rule> boardRules = new HashSet<>();
+    private int turnCount;
+    private boolean victory;
+
+    @SuppressWarnings("unchecked")
+    public Game() {
+        grid = new HashSet[HEIGHT][WIDTH];
+        initialGrid = new HashSet[HEIGHT][WIDTH];
+        images = loadImages();
+        tileImage = loadTileImage();
+        initializeGrid();
+        copyGrid(initialGrid, grid);
+        updateRules();
+    }
+
+    private Map<GameObjectType, BufferedImage> loadImages() {
+        Map<GameObjectType, BufferedImage> map = new EnumMap<>(GameObjectType.class);
+        for (GameObjectType type : GameObjectType.values()) {
+            try {
+                File file = new File(type.getImageFileName());
+                if (file.exists()) {
+                    map.put(type, ImageIO.read(file));
+                }
+            } catch (IOException e) {
+                System.err.println("Image introuvable: " + type.getImageFileName());
+            }
+        }
+        return map;
+    }
+
+    private BufferedImage loadTileImage() {
+        try {
+            File file = new File("tile.png");
+            if (file.exists()) {
+                return ImageIO.read(file);
+            }
+        } catch (IOException e) {
+            System.err.println("Image de tuile introuvable: tile.png");
+        }
+        return null;
+    }
+
+    private void initializeGrid() {
+        String[][] layout = {
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "WALL", "WALL", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
+            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
+        };
+
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                grid[y][x] = new HashSet<>();
+                initialGrid[y][x] = new HashSet<>();
+                String name = layout[y][x];
+                if (!name.isEmpty()) {
+                    GameObjectType type = GameObjectType.valueOf(name);
+                    grid[y][x].add(type);
+                    initialGrid[y][x].add(type);
+                }
+            }
+        }
+    }
+
+    private void copyGrid(Set<GameObjectType>[][] source, Set<GameObjectType>[][] target) {
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                target[y][x].clear();
+                target[y][x].addAll(source[y][x]);
+            }
+        }
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    public void draw(Graphics g, int tileSize) {
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                int px = x * tileSize;
+                int py = y * tileSize;
+                if (tileImage != null) {
+                    g.drawImage(tileImage, px, py, tileSize, tileSize, null);
+                } else {
+                    g.drawRect(px, py, tileSize, tileSize);
+                }
+                for (GameObjectType type : grid[y][x]) {
+                    BufferedImage image = images.get(type);
+                    if (image != null) {
+                        g.drawImage(image, px, py, tileSize, tileSize, null);
+                    }
+                }
+            }
+        }
+
+        if (victory) {
+            g.drawString("Victoire ! Appuyez sur R pour recommencer.", 10, HEIGHT * tileSize + 20);
+        }
+    }
+
+    public void move(Direction direction) {
+        if (victory) {
+            return;
+        }
+        turnCount++;
+        updateRules();
+
+        List<int[]> players = findPlayers();
+        if (players.isEmpty()) {
+            return;
+        }
+        sortPlayerCells(players, direction);
+
+        boolean anyMoved = false;
+        for (int[] pos : players) {
+            if (moveCell(pos[0], pos[1], direction)) {
+                anyMoved = true;
+            }
+        }
+        if (anyMoved) {
+            updateRules();
+        }
+    }
+
+    private void sortPlayerCells(List<int[]> players, Direction direction) {
+        players.sort((a, b) -> {
+            return switch (direction) {
+                case LEFT -> Integer.compare(a[0], b[0]);
+                case RIGHT -> Integer.compare(b[0], a[0]);
+                case UP -> Integer.compare(a[1], b[1]);
+                case DOWN -> Integer.compare(b[1], a[1]);
+            };
+        });
+    }
+
+    private List<int[]> findPlayers() {
+        List<int[]> players = new ArrayList<>();
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                for (GameObjectType type : grid[y][x]) {
+                    if (properties.getOrDefault(type, Set.of()).contains(Property.YOU)) {
+                        players.add(new int[]{x, y});
+                        break;
+                    }
+                }
+            }
+        }
+        return players;
+    }
+
+    private boolean moveCell(int x, int y, Direction direction) {
+        Set<GameObjectType> objects = grid[y][x];
+        if (objects.isEmpty()) {
+            return false;
+        }
+        Set<GameObjectType> moving = new HashSet<>();
+        for (GameObjectType type : objects) {
+            if (properties.getOrDefault(type, Set.of()).contains(Property.YOU)) {
+                moving.add(type);
+            }
+        }
+        if (moving.isEmpty()) {
+            return false;
+        }
+
+        int targetX = x + direction.dx;
+        int targetY = y + direction.dy;
+        if (!isInside(targetX, targetY)) {
+            return false;
+        }
+
+        if (canPush(targetX, targetY, direction)) {
+            push(targetX, targetY, direction);
+            objects.removeAll(moving);
+            grid[targetY][targetX].addAll(moving);
+            if (checkWin(targetX, targetY)) {
+                victory = true;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean canPush(int x, int y, Direction direction) {
+        if (!isInside(x, y)) {
+            return false;
+        }
+        Set<GameObjectType> target = grid[y][x];
+        if (target.isEmpty()) {
+            return true;
+        }
+        if (hasProperty(target, Property.STOP)) {
+            return false;
+        }
+        if (hasProperty(target, Property.PUSH)) {
+            int nextX = x + direction.dx;
+            int nextY = y + direction.dy;
+            return canPush(nextX, nextY, direction);
+        }
+        return true;
+    }
+
+    private void push(int x, int y, Direction direction) {
+        if (!isInside(x, y)) {
+            return;
+        }
+        Set<GameObjectType> target = new HashSet<>(grid[y][x]);
+        if (target.isEmpty()) {
+            return;
+        }
+        if (hasProperty(target, Property.PUSH)) {
+            int nextX = x + direction.dx;
+            int nextY = y + direction.dy;
+            if (canPush(nextX, nextY, direction)) {
+                push(nextX, nextY, direction);
+                grid[y][x].removeAll(target);
+                grid[nextY][nextX].addAll(target);
+            }
+        }
+    }
+
+    private boolean hasProperty(Set<GameObjectType> objects, Property property) {
+        for (GameObjectType type : objects) {
+            if (properties.getOrDefault(type, Set.of()).contains(property)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkWin(int x, int y) {
+        for (GameObjectType type : grid[y][x]) {
+            if (properties.getOrDefault(type, Set.of()).contains(Property.WIN)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void reset() {
+        copyGrid(initialGrid, grid);
+        properties.clear();
+        victory = false;
+        turnCount = 0;
+        boardRules.clear();
+        dynamicRules.clear();
+        updateRules();
+    }
+
+    private void updateRules() {
+        properties.clear();
+        boardRules.clear();
+        for (GameObjectType type : GameObjectType.values()) {
+            properties.put(type, new HashSet<>());
+        }
+
+        applyRules(baseRules);
+        buildDynamicRules();
+        applyRules(dynamicRules);
+
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                parseSequence(x, y, 1, 0);
+                parseSequence(x, y, 0, 1);
+            }
+        }
+
+        logActiveRules();
+    }
+
+    private void buildDynamicRules() {
+        dynamicRules.clear();
+        if (turnCount % 2 == 1) {
+            dynamicRules.add(Rule.ofCode(GameObjectType.ROCK, Property.STOP));
+            dynamicRules.add(Rule.ofCode(GameObjectType.ROCK, Property.YOU));
+        } else {
+            dynamicRules.add(Rule.ofCode(GameObjectType.ROCK, Property.PUSH));
+        }
+    }
+
+    private void applyRules(Iterable<Rule> rules) {
+        for (Rule rule : rules) {
+            properties.get(rule.getSubject()).add(rule.getProperty());
+        }
+    }
+
+    private void parseSequence(int x, int y, int dx, int dy) {
+        List<GameObjectType> sequence = new ArrayList<>();
+        int cx = x;
+        int cy = y;
+        while (isInside(cx, cy)) {
+            GameObjectType symbol = getTextObject(cx, cy);
+            if (symbol == null) {
+                break;
+            }
+            sequence.add(symbol);
+            if (sequence.size() >= 3) {
+                Rule rule = extractRule(sequence.subList(sequence.size() - 3, sequence.size()));
+                if (rule != null && boardRules.add(rule)) {
+                    properties.get(rule.getSubject()).add(rule.getProperty());
+                }
+            }
+            cx += dx;
+            cy += dy;
+        }
+    }
+
+    private Rule extractRule(List<GameObjectType> sequence) {
+        if (sequence.size() != 3) {
+            return null;
+        }
+        GameObjectType a = sequence.get(0);
+        GameObjectType b = sequence.get(1);
+        GameObjectType c = sequence.get(2);
+        if (b != GameObjectType.TEXT_IS) {
+            return null;
+        }
+        GameObjectType subject = a.getNoun();
+        Property property = c.getProperty();
+        if (subject != null && property != null) {
+            return Rule.ofBoard(subject, property);
+        }
+        return null;
+    }
+
+    private void logActiveRules() {
+        if (boardRules.isEmpty() && dynamicRules.isEmpty()) {
+            return;
+        }
+        System.out.println("Tour " + turnCount + " - règles actives :");
+        for (Rule rule : baseRules) {
+            System.out.println("  " + rule);
+        }
+        for (Rule rule : dynamicRules) {
+            System.out.println("  " + rule);
+        }
+        for (Rule rule : boardRules) {
+            System.out.println("  " + rule);
+        }
+    }
+
+    private GameObjectType getTextObject(int x, int y) {
+        for (GameObjectType type : grid[y][x]) {
+            if (type.isText()) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+    private boolean isInside(int x, int y) {
+        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
+    }
+}

@@ -1,0 +1,28 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+group = 'com.jeu'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+compileJava {
+    options.release = 17
+}
+
+application {
+    mainClass = 'com.jeu.babaisyou.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
