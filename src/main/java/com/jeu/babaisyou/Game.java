@@ -239,25 +239,31 @@ public class Game {
             int nextY = y + direction.dy;
             return canPush(nextX, nextY, direction);
         }
-        return true;
+        if (hasProperty(target, Property.WIN)) {
+            return true; // Permet la superposition sur les objets WIN comme le drapeau
+        }
+        return false; // Bloque le mouvement sur les autres objets sans propriétés spéciales
     }
 
     private void push(int x, int y, Direction direction) {
         if (!isInside(x, y)) {
             return;
         }
-        Set<GameObjectType> target = new HashSet<>(grid[y][x]);
-        if (target.isEmpty()) {
+        Set<GameObjectType> pushable = new HashSet<>();
+        for (GameObjectType type : grid[y][x]) {
+            if (properties.getOrDefault(type, Set.of()).contains(Property.PUSH)) {
+                pushable.add(type);
+            }
+        }
+        if (pushable.isEmpty()) {
             return;
         }
-        if (hasProperty(target, Property.PUSH)) {
-            int nextX = x + direction.dx;
-            int nextY = y + direction.dy;
-            if (canPush(nextX, nextY, direction)) {
-                push(nextX, nextY, direction);
-                grid[y][x].removeAll(target);
-                grid[nextY][nextX].addAll(target);
-            }
+        int nextX = x + direction.dx;
+        int nextY = y + direction.dy;
+        if (canPush(nextX, nextY, direction)) {
+            push(nextX, nextY, direction);
+            grid[y][x].removeAll(pushable);
+            grid[nextY][nextX].addAll(pushable);
         }
     }
 
@@ -297,8 +303,6 @@ public class Game {
         }
 
         applyRules(baseRules);
-        buildDynamicRules();
-        applyRules(dynamicRules);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -308,16 +312,6 @@ public class Game {
         }
 
         logActiveRules();
-    }
-
-    private void buildDynamicRules() {
-        dynamicRules.clear();
-        if (turnCount % 2 == 1) {
-            dynamicRules.add(Rule.ofCode(GameObjectType.ROCK, Property.STOP));
-            dynamicRules.add(Rule.ofCode(GameObjectType.ROCK, Property.YOU));
-        } else {
-            dynamicRules.add(Rule.ofCode(GameObjectType.ROCK, Property.PUSH));
-        }
     }
 
     private void applyRules(Iterable<Rule> rules) {
