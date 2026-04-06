@@ -114,6 +114,20 @@ public class Game {
         return victory;
     }
 
+    public boolean isBlocked() {
+        if (victory) return false;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                for (GameObjectType type : grid[y][x]) {
+                    if (properties.getOrDefault(type, Set.of()).contains(Property.YOU)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public void draw(Graphics g, int tileSize) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -131,10 +145,6 @@ public class Game {
                     }
                 }
             }
-        }
-
-        if (victory) {
-            g.drawString("Victoire ! Appuyez sur R pour recommencer.", 10, height * tileSize + 20);
         }
     }
 
