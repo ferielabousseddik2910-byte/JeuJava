@@ -6,11 +6,11 @@ import javax.swing.SwingUtilities;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Baba Is You en Java");
+            JFrame frame = new JFrame("Baba Is You - Niveau 1");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setResizable(false);
 
-            GamePanel panel = new GamePanel();
+            GamePanel panel = new GamePanel(frame);
             frame.add(panel);
             frame.pack();
             frame.setLocationRelativeTo(null);

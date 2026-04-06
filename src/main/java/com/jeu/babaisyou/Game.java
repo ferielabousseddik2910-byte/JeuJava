@@ -14,8 +14,10 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 public class Game {
-    private static final int WIDTH = 10;
-    private static final int HEIGHT = 8;
+    private static final int DEFAULT_WIDTH = 10;
+    private static final int DEFAULT_HEIGHT = 8;
+    private final int width;
+    private final int height;
     private final Set<GameObjectType>[][] grid;
     private final Set<GameObjectType>[][] initialGrid;
     private final Map<GameObjectType, BufferedImage> images;
@@ -31,15 +33,23 @@ public class Game {
     private final Set<Rule> boardRules = new HashSet<>();
     private int turnCount;
     private boolean victory;
+    private final Level level;
 
     @SuppressWarnings("unchecked")
     public Game() {
-        grid = new HashSet[HEIGHT][WIDTH];
-        initialGrid = new HashSet[HEIGHT][WIDTH];
+        this(Level.createLevel1()); // Niveau par défaut
+    }
+
+    @SuppressWarnings("unchecked")
+    public Game(Level level) {
+        this.level = level;
+        this.width = level.getWidth();
+        this.height = level.getHeight();
+        grid = new HashSet[height][width];
+        initialGrid = new HashSet[height][width];
         images = loadImages();
         tileImage = loadTileImage();
-        initializeGrid();
-        copyGrid(initialGrid, grid);
+        level.initializeGrid(grid, initialGrid);
         updateRules();
     }
 
@@ -70,35 +80,9 @@ public class Game {
         return null;
     }
 
-    private void initializeGrid() {
-        String[][] layout = {
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
-        };
-
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                grid[y][x] = new HashSet<>();
-                initialGrid[y][x] = new HashSet<>();
-                String name = layout[y][x];
-                if (!name.isEmpty()) {
-                    GameObjectType type = GameObjectType.valueOf(name);
-                    grid[y][x].add(type);
-                    initialGrid[y][x].add(type);
-                }
-            }
-        }
-    }
-
     private void copyGrid(Set<GameObjectType>[][] source, Set<GameObjectType>[][] target) {
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 target[y][x].clear();
                 target[y][x].addAll(source[y][x]);
             }
@@ -106,16 +90,24 @@ public class Game {
     }
 
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
     public int getHeight() {
-        return HEIGHT;
+        return height;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public boolean isVictory() {
+        return victory;
     }
 
     public void draw(Graphics g, int tileSize) {
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int px = x * tileSize;
                 int py = y * tileSize;
                 if (tileImage != null) {
@@ -133,7 +125,7 @@ public class Game {
         }
 
         if (victory) {
-            g.drawString("Victoire ! Appuyez sur R pour recommencer.", 10, HEIGHT * tileSize + 20);
+            g.drawString("Victoire ! Appuyez sur R pour recommencer.", 10, height * tileSize + 20);
         }
     }
 
@@ -174,8 +166,8 @@ public class Game {
 
     private List<int[]> findPlayers() {
         List<int[]> players = new ArrayList<>();
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 for (GameObjectType type : grid[y][x]) {
                     if (properties.getOrDefault(type, Set.of()).contains(Property.YOU)) {
                         players.add(new int[]{x, y});
@@ -297,8 +289,8 @@ public class Game {
         buildDynamicRules();
         applyRules(dynamicRules);
 
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 parseSequence(x, y, 1, 0);
                 parseSequence(x, y, 0, 1);
             }
@@ -388,6 +380,6 @@ public class Game {
     }
 
     private boolean isInside(int x, int y) {
-        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
+        return x >= 0 && x < width && y >= 0 && y < height;
     }
 }
