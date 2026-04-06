@@ -27,7 +27,17 @@ public class Game {
         Rule.ofCode(GameObjectType.BABA, Property.YOU),
         Rule.ofCode(GameObjectType.ROCK, Property.PUSH),
         Rule.ofCode(GameObjectType.WALL, Property.STOP),
-        Rule.ofCode(GameObjectType.FLAG, Property.WIN)
+        Rule.ofCode(GameObjectType.FLAG, Property.WIN),
+        // Tous les blocs de texte peuvent être poussés
+        Rule.ofCode(GameObjectType.TEXT_BABA, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_WALL, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_ROCK, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_FLAG, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_IS, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_YOU, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_PUSH, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_STOP, Property.PUSH),
+        Rule.ofCode(GameObjectType.TEXT_WIN, Property.PUSH)
         // FLOOR n'a pas de propriétés spéciales - c'est juste un espace vide
     );
     private final List<Rule> dynamicRules = new ArrayList<>();
