@@ -22,6 +22,9 @@ public class GameManager {
         levels.add(Level.createLevel1());
         levels.add(Level.createLevel2());
         levels.add(Level.createLevel3());
+        // AJOUTEZ VOS NOUVEAUX NIVEAUX ICI
+        // levels.add(Level.createLevel4());
+        // levels.add(Level.createLevel5());
     }
 
     public Game getCurrentGame() {

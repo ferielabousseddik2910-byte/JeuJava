@@ -57,6 +57,36 @@ public class GamePanel extends JPanel {
                         updatePanelSize();
                         updateFrameTitle();
                     }
+                    case KeyEvent.VK_4 -> {
+                        gameManager.goToLevel(4);
+                        updatePanelSize();
+                        updateFrameTitle();
+                    }
+                    case KeyEvent.VK_5 -> {
+                        gameManager.goToLevel(5);
+                        updatePanelSize();
+                        updateFrameTitle();
+                    }
+                    case KeyEvent.VK_6 -> {
+                        gameManager.goToLevel(6);
+                        updatePanelSize();
+                        updateFrameTitle();
+                    }
+                    case KeyEvent.VK_7 -> {
+                        gameManager.goToLevel(7);
+                        updatePanelSize();
+                        updateFrameTitle();
+                    }
+                    case KeyEvent.VK_8 -> {
+                        gameManager.goToLevel(8);
+                        updatePanelSize();
+                        updateFrameTitle();
+                    }
+                    case KeyEvent.VK_9 -> {
+                        gameManager.goToLevel(9);
+                        updatePanelSize();
+                        updateFrameTitle();
+                    }
                 }
                 repaint();
             }

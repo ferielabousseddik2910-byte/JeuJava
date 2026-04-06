@@ -51,7 +51,7 @@ gradlew.bat run
 | **R** | Réinitialiser le niveau actuel |
 | **N** | Passer au niveau suivant (si niveau terminé) |
 | **P** | Retourner au niveau précédent |
-| **1, 2, 3** | Aller directement au niveau 1, 2 ou 3 |
+| **1, 2, 3, ..., 9** | Aller directement au niveau 1-9 |
 
 ## 🏗️ Architecture du Projet
 
