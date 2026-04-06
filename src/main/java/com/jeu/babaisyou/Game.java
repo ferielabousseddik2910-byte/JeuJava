@@ -24,10 +24,8 @@ public class Game {
     private final BufferedImage tileImage;
     private final Map<GameObjectType, Set<Property>> properties = new EnumMap<>(GameObjectType.class);
     private final List<Rule> baseRules = List.of(
-        Rule.ofCode(GameObjectType.BABA, Property.YOU),
-        Rule.ofCode(GameObjectType.ROCK, Property.PUSH),
+        // Aucune règle YOU n'est codée en dur : BABA IS YOU doit être présente sur le plateau
         Rule.ofCode(GameObjectType.WALL, Property.STOP),
-        Rule.ofCode(GameObjectType.FLAG, Property.WIN),
         // Tous les blocs de texte peuvent être poussés
         Rule.ofCode(GameObjectType.TEXT_BABA, Property.PUSH),
         Rule.ofCode(GameObjectType.TEXT_WALL, Property.PUSH),
