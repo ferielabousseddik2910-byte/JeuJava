@@ -82,11 +82,11 @@ src/main/java/com/jeu/babaisyou/
 
 ## 🎯 Système de Niveaux
 
-Le jeu inclut maintenant **3 niveaux progressifs** :
+Le jeu inclut **4 niveaux progressifs** :
 
 ### **Niveau 1 - Les Bases**
 - Apprentissage des mécaniques de base
-- Introduction aux règles `BABA IS YOU`, `ROCK IS PUSH`, `WALL IS STOP`, `FLAG IS WIN`
+- Les règles `BABA IS YOU`, `ROCK IS PUSH`, `WALL IS STOP`, `FLAG IS WIN` sont disposées sur le plateau
 
 ### **Niveau 2 - Pousser les Roches**
 - Ajout d'obstacles (roches) à pousser
@@ -96,10 +96,15 @@ Le jeu inclut maintenant **3 niveaux progressifs** :
 - Configuration plus complexe du plateau
 - Combinaison de plusieurs mécaniques
 
+### **Niveau 4 - Rock Is You**
+- La règle `ROCK IS YOU` remplace `BABA IS YOU` : le joueur contrôle la roche, pas Baba
+- Baba est un objet inerte
+- Il faut naviguer la roche autour du mur central pour atteindre le drapeau
+
 ### **Navigation entre niveaux**
 - **N** : Passe automatiquement au niveau suivant après avoir gagné
 - **P** : Retourne au niveau précédent
-- **1/2/3** : Accès direct à n'importe quel niveau
+- **1/2/3/4** : Accès direct à n'importe quel niveau
 - **R** : Redémarre le niveau actuel
 
 ## 🎲 Objets du Jeu
@@ -130,6 +135,15 @@ Le jeu implémente deux types de règles :
 2. **Règles dynamiques** (Plateau)
    - Créées en déplaçant les blocs de texte sur la grille
    - Modifient la mécanique du jeu en temps réel
+   - ⚠️ `BABA IS YOU` doit être présente sur le plateau — elle n'est **pas** codée en dur
+
+## �️ Interface Graphique
+
+- **Barre de statut** (sous le plateau) : affiche un message contextuel après chaque action
+  - ✅ **"Félicitations !"** (vert) quand le niveau est remporté
+  - ❌ **"Essaye encore... (R pour réinitialiser)"** (rouge) quand le joueur est bloqué
+- **Indicateur de niveau** (haut gauche) : affiche `Niveau X/Y - Nom du niveau`
+- **Titre de la fenêtre** : mis à jour dynamiquement selon le niveau courant
 
 ## 📐 Spécifications Techniques
 
@@ -138,6 +152,7 @@ Le jeu implémente deux types de règles :
 - **Build Tool** : Gradle
 - **Grille de jeu** : 10x8 cases
 - **Taille d'une case** : 64 pixels
+- **Hauteur de la barre de statut** : 40 pixels
 
 ## 📦 Dépendances
 
