@@ -23,8 +23,6 @@ public class GestionJeu {
         niveaux.add(Niveau.creerNiveau2());
         niveaux.add(Niveau.creerNiveau3());
         niveaux.add(Niveau.creerNiveau4());
-        // AJOUTEZ VOS NOUVEAUX NIVEAUX ICI
-        // niveaux.add(Niveau.creerNiveau5());
     }
 
     public Jeu getJeuActuel() {

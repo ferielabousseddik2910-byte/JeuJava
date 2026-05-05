@@ -104,12 +104,6 @@ public class Niveau {
 
     // Niveau 4 - Rock Is You
     public static Niveau creerNiveau4() {
-        // Seules règles actives au départ :
-        //   ROCK IS YOU  : horizontale ligne 6, cols 1-2-3
-        //   FLAG IS WIN  : horizontale ligne 6, cols 4-5-6
-        // BABA IS YOU n'est PAS présente : baba est un objet neutre inerte.
-        // Le joueur contrôle uniquement la roche.
-        // Solution : naviguer la roche autour du mur central jusqu'au drapeau.
         String[][] disposition = {
             {"WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"},
             {"WALL","BABA","","","","","","","","WALL"},
@@ -123,21 +117,5 @@ public class Niveau {
         return new Niveau("Niveau 4 - Rock Is You", disposition);
     }
 
-    // AJOUTEZ VOS NOUVEAUX NIVEAUX ICI
-    // Exemple de niveau personnalisé :
-    /*
-    public static Niveau creerNiveau5() {
-        String[][] disposition = {
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "ROCK", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "FLAG", "TEXT_FLAG", "TEXT_IS", "TEXT_WIN", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
-            {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
-        };
-        return new Niveau("Niveau 5 - Votre Niveau", disposition);
-    }
-    */
+
 }
