@@ -1,226 +1,120 @@
 # 🎮 Baba Is You - Implémentation Java
 
-Une implémentation du célèbre jeu de puzzle **Baba Is You** développée en Java avec une interface graphique Swing.
+Une version Java du jeu de puzzle **Baba Is You**, construite avec une interface graphique **Swing**.
 
-## 📖 À propos
+## 📖 Description
 
-**Baba Is You** est un jeu de puzzle innovant où les **mots eux-mêmes sont des objets manipulables**. Vous pouvez créer des règles en déplaçant des blocs de texte sur le plateau, ce qui change dynamiquement la mécanique du jeu.
-
-### 🎯 Objectif
-Atteindre le **FLAG** (drapeau) en créant les bonnes règles de texte sur le plateau.
+Dans ce jeu, les règles sont des objets que l'on peut manipuler sur le plateau. En déplaçant des blocs de texte, vous changez les règles du monde et vous devez atteindre le **FLAG** pour gagner.
 
 ## ⚙️ Prérequis
 
-- **Java 17 ou supérieur**
-  - [Télécharger Java](https://www.oracle.com/java/technologies/downloads/)
-  - Vérifier l'installation : `java -version`
+- Java 17 ou supérieur
+- Gradle Wrapper inclus dans le projet
 
-## 🚀 Installation et Lancement
+## 🚀 Lancement
 
-### 1️⃣ Cloner le repository
+### Cloner le dépôt
 ```bash
 git clone https://github.com/ferielabousseddik2910-byte/JeuJava.git
 cd JeuJava
 ```
 
-### 2️⃣ Lancer le jeu
+### Exécuter le jeu
 
-**Sur macOS / Linux :**
+Sur macOS / Linux :
 ```bash
 ./gradlew run
 ```
 
-**Sur Windows :**
+Sur Windows :
 ```bash
 gradlew.bat run
 ```
 
-### 3️⃣ Construire le projet
+### Construire le projet
 ```bash
 ./gradlew build
 ```
 
-## 🎮 Contrôles du Jeu
+## 🎮 Contrôles
 
 | Touche | Action |
 |--------|--------|
-| **↑ Flèche haut** | Déplacer vers le haut |
-| **↓ Flèche bas** | Déplacer vers le bas |
-| **← Flèche gauche** | Déplacer vers la gauche |
-| **→ Flèche droite** | Déplacer vers la droite |
-| **R** | Réinitialiser le niveau actuel |
-| **N** | Passer au niveau suivant (si niveau terminé) |
-| **P** | Retourner au niveau précédent |
-| **1, 2, 3, ..., 9** | Aller directement au niveau 1-9 |
+| Flèche haut | Déplacer vers le haut |
+| Flèche bas | Déplacer vers le bas |
+| Flèche gauche | Déplacer vers la gauche |
+| Flèche droite | Déplacer vers la droite |
+| R | Réinitialiser le niveau actuel |
+| N | Passer au niveau suivant (si le niveau est gagné) |
+| P | Revenir au niveau précédent |
+| 1, 2, 3, 4 | Aller directement au niveau 1-4 |
 
-## 🏗️ Architecture du Projet
+## 🧩 Structure du projet
 
-```
-src/main/java/com/jeu/babaisyou/
-├── Main.java              # Entrée principale de l'application
-├── Game.java              # Logique du jeu et gestion de l'état
-├── GamePanel.java         # Interface graphique (Swing)
-├── GameManager.java       # Gestion des niveaux et progression
-├── Level.java             # Définition et gestion des niveaux
-├── GameObjectType.java    # Énumération des types d'objets
-├── Direction.java         # Énumération des directions
-├── Property.java          # Énumération des propriétés (YOU, PUSH, STOP, WIN)
-└── Rule.java              # Gestion des règles du jeu
-```
+`src/main/java/com/jeu/babaisyou/`
+- `Principal.java` : point d'entrée de l'application
+- `GestionJeu.java` : gestion des niveaux et de la progression
+- `Jeu.java` : logique du plateau, des règles et des déplacements
+- `PanneauJeu.java` : affichage Swing et gestion du clavier
+- `Niveau.java` : définition et création des niveaux
+- `Regle.java` : représentation des règles de jeu
+- `Propriete.java` : propriétés `YOU`, `PUSH`, `STOP`, `WIN`
+- `TypeObjetJeu.java` : objets du jeu et fichiers image associés
+- `Direction.java` : directions de déplacement
 
-### 📋 Classes principales
+## 🎯 Niveaux inclus
 
-- **Main.java** : Crée la fenêtre principale `JFrame` et initialise `GamePanel`
-- **Game.java** : Gère la grille du jeu, les règles, les mouvements et la détection de victoire
-- **GamePanel.java** : Composant graphique (Swing) qui affiche le jeu et traite les entrées clavier
-- **GameManager.java** : Gère la progression entre les niveaux et la navigation
-- **Level.java** : Définit la structure d'un niveau avec son layout et ses propriétés
-- **Rule.java** : Représente les règles dynamiques du jeu (pouvant venir du code ou du plateau)
-- **GameObjectType.java** : Énumère tous les objets du jeu (BABA, ROCK, WALL, FLAG, etc.)
-- **Property.java** : Énumère les propriétés (YOU, PUSH, STOP, WIN, etc.)
-- **Direction.java** : Gère les 4 directions avec leurs vecteurs (dx, dy)
+1. **Niveau 1 - Les Bases**
+2. **Niveau 2 - Pousser les Roches**
+3. **Niveau 3 - Le Labyrinthe**
+4. **Niveau 4 - Rock Is You**
 
-## 🎯 Système de Niveaux
+## 🧱 Objets et règles
 
-Le jeu inclut **4 niveaux progressifs** :
+Le jeu utilise les objets suivants :
+- `BABA`, `ROCK`, `WALL`, `FLAG`
+- `TEXT_BABA`, `TEXT_WALL`, `TEXT_ROCK`, `TEXT_FLAG`
+- `TEXT_IS`, `TEXT_YOU`, `TEXT_PUSH`, `TEXT_STOP`, `TEXT_WIN`
 
-### **Niveau 1 - Les Bases**
-- Apprentissage des mécaniques de base
-- Les règles `BABA IS YOU`, `ROCK IS PUSH`, `WALL IS STOP`, `FLAG IS WIN` sont disposées sur le plateau
+Règles principales :
+- `WALL IS STOP`
+- `TEXT_* IS PUSH` pour les blocs de texte
+- `FLAG IS WIN`
+- `BABA IS YOU` est gérée par le plateau et n'est pas codée en dur
 
-### **Niveau 2 - Pousser les Roches**
-- Ajout d'obstacles (roches) à pousser
-- Complexité accrue dans la résolution de puzzles
+## 🎮 Particularités
 
-### **Niveau 3 - Le Labyrinthe**
-- Configuration plus complexe du plateau
-- Combinaison de plusieurs mécaniques
+- Le jeu gère des règles codées en dur et des règles dynamiques créées sur le plateau.
+- Si le joueur ne contrôle plus aucun sujet `YOU`, l'état est considéré comme bloqué.
+- Le niveau 4 démarre avec `ROCK IS YOU` et `BABA` inerte.
 
-### **Niveau 4 - Rock Is You**
-- La règle `ROCK IS YOU` remplace `BABA IS YOU` : le joueur contrôle la roche, pas Baba
-- Baba est un objet inerte
-- Il faut naviguer la roche autour du mur central pour atteindre le drapeau
+## 🖼️ Ressources graphiques
 
-### **Navigation entre niveaux**
-- **N** : Passe automatiquement au niveau suivant après avoir gagné
-- **P** : Retourne au niveau précédent
-- **1/2/3/4** : Accès direct à n'importe quel niveau
-- **R** : Redémarre le niveau actuel
+Le jeu charge des images depuis le répertoire racine du projet (`/workspaces/JeuJava`). Les fichiers suivants sont attendus :
+- `baba.png`
+- `rock.png`
+- `wall.png`
+- `flag.png`
+- `text_baba.png`
+- `text_wall.png`
+- `text_rock.png`
+- `text_flag.png`
+- `text_is.png`
+- `text_you.png`
+- `text_push.png`
+- `text_stop.png`
+- `text_win.png`
+- `tile.png`
 
-## 🎲 Objets du Jeu
+Si les images sont manquantes, le jeu affichera simplement les cases de la grille et les objets.
 
-Le jeu utilise différents types d'objets pour créer les niveaux :
+## 🛠️ Commandes utiles
 
-| Code | Description |
-|------|-------------|
-| `BABA` | Le personnage principal |
-| `ROCK` | Roche poussable |
-| `WALL` | Mur infranchissable |
-| `FLAG` | Objectif à atteindre |
-| `FLOOR` | **Case de sol neutre** (espace vide où on peut marcher) |
-| `TEXT_BABA`, `TEXT_IS`, `TEXT_YOU` | Règles de base |
-| `TEXT_ROCK`, `TEXT_PUSH` | Propriétés |
-| `TEXT_FLAG`, `TEXT_WIN` | Conditions de victoire |
+- Compiler : `./gradlew compileJava`
+- Lancer : `./gradlew run`
+- Construire : `./gradlew build`
+- Tester : `./gradlew test`
 
-## 🎲 Système de Règles
+## 🔧 Configuration Gradle
 
-Le jeu implémente deux types de règles :
-
-1. **Règles de base** (Code)
-   - `BABA IS YOU` - Vous contrôlez Baba
-   - `ROCK IS PUSH` - Les roches peuvent être poussées
-   - `WALL IS STOP` - Les murs bloquent le mouvement
-   - `FLAG IS WIN` - Le drapeau est l'objectif
-
-2. **Règles dynamiques** (Plateau)
-   - Créées en déplaçant les blocs de texte sur la grille
-   - Modifient la mécanique du jeu en temps réel
-   - ⚠️ `BABA IS YOU` doit être présente sur le plateau — elle n'est **pas** codée en dur
-
-## �️ Interface Graphique
-
-- **Barre de statut** (sous le plateau) : affiche un message contextuel après chaque action
-  - ✅ **"Félicitations !"** (vert) quand le niveau est remporté
-  - ❌ **"Essaye encore... (R pour réinitialiser)"** (rouge) quand le joueur est bloqué
-- **Indicateur de niveau** (haut gauche) : affiche `Niveau X/Y - Nom du niveau`
-- **Titre de la fenêtre** : mis à jour dynamiquement selon le niveau courant
-
-## 📐 Spécifications Techniques
-
-- **Language** : Java 17+
-- **Framework GUI** : Swing
-- **Build Tool** : Gradle
-- **Grille de jeu** : 10x8 cases
-- **Taille d'une case** : 64 pixels
-- **Hauteur de la barre de statut** : 40 pixels
-
-## 📦 Dépendances
-
-Le projet n'utilise que les bibliothèques standard Java :
-- `java.awt` - Interface graphique
-- `javax.swing` - Composants Swing
-- `java.util` - Collections et utilitaires
-
-## 🛠️ Développement
-
-### Compiler le projet
-```bash
-./gradlew compileJava
-```
-
-### Exécuter les tests (si disponibles)
-```bash
-./gradlew test
-```
-
-### Générer un JAR exécutable
-```bash
-./gradlew build
-```
-
-Le JAR sera généré dans `build/libs/`
-
-## 🎨 Ressources Graphiques
-
-Le jeu utilise des images pour chaque type d'objet. Assurez-vous que les fichiers images sont dans le répertoire approprié :
-
-```
-resources/
-└── images/
-    ├── baba.png
-    ├── rock.png
-    ├── wall.png
-    ├── flag.png
-    └── ...
-```
-
-## 📝 Configuration Gradle
-
-Configuration définie dans `build.gradle` :
-- **Group** : `com.jeu`
-- **Version** : `1.0.0`
-- **Main Class** : `com.jeu.babaisyou.Main`
-- **Java Version** : 17
-
-## 🐛 Dépannage
-
-**Le jeu ne démarre pas ?**
-- Vérifiez que Java 17+ est installé : `java -version`
-- Assurez-vous que les fichiers images sont présents
-- Vérifiez les logs d'erreur dans la console
-
-**Les images ne s'affichent pas ?**
-- Vérifiez le chemin des fichiers images dans `Game.java`
-- Assurez-vous que les fichiers sont au bon format (PNG, JPG, etc.)
-
-## 📄 Licence
-
-Ce projet est une implémentation personnelle du concept "Baba Is You".
-
-## 👥 Auteur
-
-**ferielabousseddik2910-byte**
-
----
-
-**Bon jeu ! 🎮**
+Le projet utilise Java 17 et la classe principale est `com.jeu.babaisyou.Principal`.

@@ -1,0 +1,20 @@
+# Build directories
+/build/
+.gradle/
+
+# Compiled classes
+*.class
+
+# Gradle cache
+.gradle/
+
+# Distribution archives
+*.tar
+*.zip
+
+# IDE files
+*.iml
+.idea/
+
+# Logs
+*.log

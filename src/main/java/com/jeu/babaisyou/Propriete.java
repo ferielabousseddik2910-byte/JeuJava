@@ -1,6 +1,6 @@
 package com.jeu.babaisyou;
 
-public enum Property {
+public enum Propriete {
     YOU,
     PUSH,
     STOP,

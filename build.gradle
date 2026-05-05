@@ -16,7 +16,7 @@ compileJava {
 }
 
 application {
-    mainClass = 'com.jeu.babaisyou.Main'
+    mainClass = 'com.jeu.babaisyou.Principal'
 }
 
 repositories {

@@ -6,51 +6,51 @@ import java.util.Set;
 /**
  * Représente un niveau du jeu Baba Is You
  */
-public class Level {
-    private final String name;
-    private final int width;
-    private final int height;
-    private final String[][] layout;
+public class Niveau {
+    private final String nom;
+    private final int largeur;
+    private final int hauteur;
+    private final String[][] disposition;
 
-    public Level(String name, String[][] layout) {
-        this.name = name;
-        this.layout = layout;
-        this.height = layout.length;
-        this.width = layout[0].length;
+    public Niveau(String nom, String[][] disposition) {
+        this.nom = nom;
+        this.disposition = disposition;
+        this.hauteur = disposition.length;
+        this.largeur = disposition[0].length;
     }
 
     public String getName() {
-        return name;
+        return nom;
     }
 
-    public int getWidth() {
-        return width;
+    public int getLargeur() {
+        return largeur;
     }
 
-    public int getHeight() {
-        return height;
+    public int getHauteur() {
+        return hauteur;
     }
 
     public String[][] getLayout() {
-        return layout;
+        return disposition;
     }
 
     /**
      * Initialise la grille avec ce niveau
      */
-    public void initializeGrid(Set<GameObjectType>[][] grid, Set<GameObjectType>[][] initialGrid) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                grid[y][x] = new HashSet<>();
-                initialGrid[y][x] = new HashSet<>();
-                String name = layout[y][x];
-                if (!name.isEmpty()) {
+    public void initialiserGrille(Set<TypeObjetJeu>[][] grille, Set<TypeObjetJeu>[][] grilleInitiale) {
+        for (int y = 0; y < hauteur; y++) {
+            for (int x = 0; x < largeur; x++) {
+                grille[y][x] = new HashSet<>();
+                grilleInitiale[y][x] = new HashSet<>();
+                String nom = disposition[y][x];
+                if (!nom.isEmpty()) {
                     try {
-                        GameObjectType type = GameObjectType.valueOf(name);
-                        grid[y][x].add(type);
-                        initialGrid[y][x].add(type);
+                        TypeObjetJeu type = TypeObjetJeu.valueOf(nom);
+                        grille[y][x].add(type);
+                        grilleInitiale[y][x].add(type);
                     } catch (IllegalArgumentException e) {
-                        System.err.println("Type d'objet inconnu: " + name);
+                        System.err.println("Type d'objet inconnu : " + nom);
                     }
                 }
             }
@@ -58,8 +58,8 @@ public class Level {
     }
 
     // Niveau 1 - Introduction simple
-    public static Level createLevel1() {
-        String[][] layout = {
+    public static Niveau creerNiveau1() {
+        String[][] disposition = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "BABA", "", "", "", "", "", "", "", "WALL"},
             {"WALL", "", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL"},
@@ -69,12 +69,12 @@ public class Level {
             {"WALL", "", "", "", "", "", "", "", "FLAG", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
-        return new Level("Niveau 1 - Les Bases", layout);
+        return new Niveau("Niveau 1 - Les Bases", disposition);
     }
 
     // Niveau 2 - Puzzle de poussée
-    public static Level createLevel2() {
-        String[][] layout = {
+    public static Niveau creerNiveau2() {
+        String[][] disposition = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "", "", "", "", "", "WALL"},
             {"WALL", "", "ROCK", "ROCK", "", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "", "WALL"},
@@ -84,12 +84,12 @@ public class Level {
             {"WALL", "", "", "", "", "", "", "", "", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
-        return new Level("Niveau 2 - Pousser les Roches", layout);
+        return new Niveau("Niveau 2 - Pousser les Roches", disposition);
     }
 
     // Niveau 3 - Petit labyrinthe
-    public static Level createLevel3() {
-        String[][] layout = {
+    public static Niveau creerNiveau3() {
+        String[][] disposition = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "BABA", "", "WALL", "", "", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL"},
             {"WALL", "", "", "WALL", "", "ROCK", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL"},
@@ -99,17 +99,18 @@ public class Level {
             {"WALL", "", "", "", "", "", "", "", "FLAG", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
-        return new Level("Niveau 3 - Le Labyrinthe", layout);
+        return new Niveau("Niveau 3 - Le Labyrinthe", disposition);
     }
+
     // Niveau 4 - Rock Is You
-    public static Level createLevel4() {
+    public static Niveau creerNiveau4() {
         // Seules règles actives au départ :
         //   ROCK IS YOU  : horizontale ligne 6, cols 1-2-3
         //   FLAG IS WIN  : horizontale ligne 6, cols 4-5-6
         // BABA IS YOU n'est PAS présente : baba est un objet neutre inerte.
         // Le joueur contrôle uniquement la roche.
         // Solution : naviguer la roche autour du mur central jusqu'au drapeau.
-        String[][] layout = {
+        String[][] disposition = {
             {"WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"},
             {"WALL","BABA","","","","","","","","WALL"},
             {"WALL","WALL","WALL","WALL","","","","","","WALL"},
@@ -119,14 +120,14 @@ public class Level {
             {"WALL","TEXT_ROCK","TEXT_IS","TEXT_YOU","TEXT_FLAG","TEXT_IS","TEXT_WIN","","","WALL"},
             {"WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"}
         };
-        return new Level("Niveau 4 - Rock Is You", layout);
+        return new Niveau("Niveau 4 - Rock Is You", disposition);
     }
 
     // AJOUTEZ VOS NOUVEAUX NIVEAUX ICI
     // Exemple de niveau personnalisé :
     /*
-    public static Level createLevel4() {
-        String[][] layout = {
+    public static Niveau creerNiveau5() {
+        String[][] disposition = {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "BABA", "TEXT_BABA", "TEXT_IS", "TEXT_YOU", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "ROCK", "TEXT_ROCK", "TEXT_IS", "TEXT_PUSH", "WALL", "WALL", "WALL", "WALL", "WALL"},
@@ -136,6 +137,7 @@ public class Level {
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"},
             {"WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL", "WALL"}
         };
-        return new Level("Niveau 4 - Votre Niveau", layout);
+        return new Niveau("Niveau 5 - Votre Niveau", disposition);
     }
-    */}
+    */
+}
